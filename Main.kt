@@ -1,70 +1,104 @@
+import kotlin.math.*
 import kotlin.random.Random
-fun main() {
-    // 1. Вывод информации о типах данных
-    println("Задание 1")
-    println("\nТипы данных в Kotlin:\n")
-    println("Целочисленные: Byte, Short, Int, Long")
-    println("Дробные: Float, Double")
-    println("Символьные: Char")
-    println("Логические: Boolean")
-    println("Строки: String")
-    println("Коллекции: List, Set, Map и их изменяемые версии")
-    println("\nПример использования переменных:")
-    val intVar: Int = 42
-    val stringVar: String = "Привет, Kotlin!"
-    println("Int: $intVar")
-    println("String: $stringVar")
-
-    // 2. Вывод числа с точностью до сотых
-    println("\nЗадание 2")
-    val number1 = 3.14159
-    println("%.2f".format(number1))
-
-    // 3. Вывод числа e с точностью до десятых
-    println("\nЗадание 3")
-    val e = Math.E
-    println("%.1f".format(e))
-
-    // 4. Ввод числа с клавиатуры и вывод с сообщением
-    println("\nЗадание 4")
-    print("Введите число: ")
-    val input1 = readln().toInt()
-    println("Вы ввели число $input1")
-
-    // 5. Ввод числа с клавиатуры и вывод с сообщением после числа
-    println("\nЗадание 5")
-    print("Введите число: ")
-    val input2 = readln().toInt()
-    println("$input2 — вот какое число Вы ввели")
-
-    // 6. Вывод чисел 1, 13 и 49 с одним пробелом
-    println("\nЗадание 6")
-    println("1 13 49")
-
-    // 7. Вывод чисел 7, 15 и 100 с двумя пробелами
-    println("\nЗадание 7")
-    println("7  15  100")
-
-    // 8. Вывод трех любых чисел с двумя пробелами
-    println("\nЗадание 8")
-    println("8  22  99")
-
-    // 9. Вывод четырех любых чисел с одним пробелом
-    println("\nЗадание 9")
-    println("3 5 7 9")
-
-    // 10. Вывод чисел 50 и 10 одно под другим
-    println("\nЗадание 10")
-    println("50\n10")
-
-    // 11. Вывод чисел 5, 10 и 21 одно под другим
-    println("\nЗадание 11")
-    println("5\n10\n21")
-
-    // 12. Вывод четырех любых чисел столбиком
-    println("\nЗадание 12")
-    repeat (4) {
-
-        println(Random.nextInt(100))
+// 1.Консольный калькулятор
+fun calculator (){
+    println("Введите первое число: ")
+    val a = readln().toDouble()
+    println("Введите второе число: ")
+    val b = readln().toDouble()
+    println("Введите операцию (+; -; *; /; ^; √; abs; %): ")
+    val z = readln()
+    when (z) {
+        "+" -> println("Результат: ${a+b}")
+        "-" -> println("Результат: ${a-b}")
+        "*" -> println("Результат: ${a*b}")
+        "/" -> println("Результат: ${a/b}")
+        "^" -> println("Результат: ${a.pow(b)}")
+        "√" -> println ("Результат: ${sqrt(a)}")
+        "abs" -> println("Результат: ${abs(a)}")
+        "%" -> println("Результат: ${a%b}")
+        else -> println("Неизвестная операция")
     }
+}
+
+// 2.Проверка полиндрома
+fun palindrome(){
+    println("Введите слово: ")
+    val word = readln()
+    val isPalidrome = word == word.reversed()
+        if (isPalidrome) {
+            println("Слово \"$word\" является палиндромом.")
+        } else {
+            println("Слово \"$word\" не является палиндромом.")
+        }
+}
+
+// 3. Подсчёт очков команды
+fun calculatepoints(wins: Int, draws: Int, losses: Int): Int {
+    return wins * 3 + draws * 1
+    }
+fun minNumbers(numbers: List <Int>): Int{
+    return numbers.minOrNull() ?: throw IllegalArgumentException("Список пуст")
+}
+        fun main() {
+            calculator()
+            palindrome()
+            println("Введите колчество побед: ")
+            val wins = readln().toInt()
+            println("Введите число ничьих:")
+            val draws = readln().toInt()
+            println("Введите количество поражений: ")
+            val losses = readln().toInt()
+            val totalPoints = calculatepoints(wins, draws, losses)
+            println("Команда набрала $totalPoints очков.")
+
+// 4.Нахождение минимального числа в списке
+            println("Введите числа через пробел: ")
+            val input = readln()
+            val numbers = input.split(" ").map { it.toInt() }
+            val minNumber = numbers.minOrNull()
+            println("Минимальное число: $minNumber")
+
+// 5.Проверка равенства двух чисел
+            println("Введите первое число: ")
+            val num1 = readln().toInt()
+            println("Введите второе число: ")
+            val num2 = readln().toInt()
+            println("Числа равны? ${isEsqual(num1, num2)}")
+// 6.Карточная игра
+var totalScore = 0
+var isGameOver = false
+println("Добро пожаловаь в игру 21 очко!")
+println("Цель: набрать сумму очков, близкую к 21, но не превышающую её. \n")
+while (!isGameOver){
+    println("Текущая сумма очков: $totalScore")
+    print("Хотите взять карту? (да/нет): ")
+    val choice = readln().lowercase()
+    when(choice) {
+        "да" -> {
+            val card = Random.nextInt(1,12)
+        totalScore +=card
+        println("\nВы получили карту: $card")
+        if (totalScore > 21) {
+            println("\nСумма очков: $totalScore. Поздравляем, вы проиграли")
+            isGameOver = true
+        }
+    }
+        "нет" -> {
+            println("\nИтоговая сумма: $totalScore")
+            when {
+                totalScore == 21 -> println ("поздравляем! Вы набрал ровно 21 очко!")
+                totalScore in 18..20 -> println("Хороший результат!")
+                else -> println("Можно было рискнуть ещё...")
+            }
+            isGameOver = true
+        }
+        else -> println("Неккоректный ввод. Введите 'да' или 'нет'. ")
+
+    }
+}
+            println("\nВы проиграли все деньги! Приходите ещё!")
+        }
+fun isEsqual(a: Int, b: Int): Boolean{
+    return a == b
 }
